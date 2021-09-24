@@ -1,0 +1,33 @@
+from uboot terminal session
+
+* press space at uboot session
+first we need to load uimage from sd card to DDR memory to the address 0x82000000
+
+* SD card interface for BB board is MMC0
+* eMMC interfce uses is MMC1
+
+
+help load  -> will show help for load command
+
+to load uimage from SD card 2nd partion  to DDR memory at 0x82000000
+
+load mmc 0:2 0x82000000 /boot/uImage
+
+the comand md will display the memory content
+to read Uimage header's 16 byte of 64 byte from the 0x82000000 address 
+
+md 0x82000000 4 { 4 words-> 4*4bytes}
+
+we can use imi command to print all information on header
+
+imi 0x82000000
+
+//////////////please refer booting sequence lecture on udemy/////////
+Beagle Bone Linux Source file:
+
+https://github.com/beagleboard/linux
+
+uboot source file:
+https://github.com/u-boot/u-boot
+//////////////////////////////////////////////
+
