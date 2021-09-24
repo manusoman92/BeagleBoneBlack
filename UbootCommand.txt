@@ -31,3 +31,16 @@ uboot source file:
 https://github.com/u-boot/u-boot
 //////////////////////////////////////////////
 
+eMMC flashing
+extract pre built image.
+
+write image to SD card
+
+download image from : https://beagleboard.org/latest-images
+
+sudo dd if=<filename>.img of=/dev/sdx
+
+make sure Card device enumeration name
+
+only ROOTFS partition of SD card is necessary
+
