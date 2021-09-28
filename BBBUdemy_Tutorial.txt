@@ -6,7 +6,7 @@ search angstrom beaglebone demo image on google
 
 partitioning of SD card
 
-we required two partitioning 
+we required two partitioning
 
 
 connect SD card
@@ -20,3 +20,58 @@ create partitions
 FATFS-> BOOT - 2048mb -> set flag as boot
 
 ext3 ->ROOTFS - remaining mb
+
+/////How to share PC internet with beagle bone black///
+login : debian
+password: temppwd
+
+check ifconfig
+ list of internet interface are there
+
+ etho -> PC ethrenet interface
+
+ USB0 7 USB 1 are used to communicate over ethernet using USB0
+  called ethernet over USB
+
+the IP address for USB0 and USB1 interface are already assigned at booting time.
+the sripts for that is located at /opt/scripts/boot
+
+di ifconfig -a on host PC. you can see the USbover ethernet are enumerated and ip address are assigned as
+192.168.7.1 and 192.168.6.1
+
+do autoethernet for ubuntu 16.04 from internet option drop down
+
+try to ping from host pc to BBB
+ping 192.168.7.2 or 6.2
+ try to ping from BBB to Host
+ping 192.168.7.1
+
+if we try to ping public ip address as
+ping 8.8.8.8 from BBB, network unreachable warning will show
+for that you have to share PC internet with BBB
+
+first we have to edit /etc/resolv.conf
+insert
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+
+next we have to add , the default gateway address to routing table
+sudo route add default gw 192.168.7.1 usb0
+sudo route add default gw 192.168.6.1 usb1
+
+on host pc side you have to do ip table settings and ip forward settings
+
+enable ip forwarding
+echo 1 > /proc/sys/net/ipv4/ip_forward
+or
+sudo sh -c "echo 1 > /proc/sys/net/ipv4/ip_forward"
+
+
+ip table seeting to share wifi internet with an interface
+
+sudo iptables --table nat --append POSTROUTING --out-interface <wifi-interface> -j MASQUERADE
+sudo iptables --append FORWARD --in-interface <ethernet-interface to share with> -j ACCEPT
+
+find out name if wifi interfcae
+for my case : wlp3s0
+BBB interface : enxe415f6f6e0ae,
