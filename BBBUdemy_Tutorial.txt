@@ -1,0 +1,22 @@
+First we need to load pre built binary
+
+search angstrom beaglebone demo image on google
+
+ openBeagleBoneBlack folder , there is a MLO file
+
+partitioning of SD card
+
+we required two partitioning 
+
+
+connect SD card
+
+check the device by dmesg command most probabily sdb device should listed there
+
+install gparted software and open the software
+
+create partitions
+
+FATFS-> BOOT - 2048mb -> set flag as boot
+
+ext3 ->ROOTFS - remaining mb
